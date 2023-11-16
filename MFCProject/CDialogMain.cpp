@@ -27,15 +27,15 @@ void CDialogMain::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDialogMain, CDialogEx)
-	ON_BN_CLICKED(IDC_BUTTON_DEBUG, &CDialogMain::OnClickedButtonDebug)
+//	ON_BN_CLICKED(IDC_BUTTON_DEBUG, &CDialogMain::OnClickedButtonDebug)
 END_MESSAGE_MAP()
 
 
 // CDialogMain message handlers
 
 
-void CDialogMain::OnClickedButtonDebug()
-{
-	// TODO: Add your control notification handler code here
-
-}
+//void CDialogMain::OnClickedButtonDebug()
+//{
+//	// TODO: Add your control notification handler code here
+//
+//}
