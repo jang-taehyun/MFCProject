@@ -8,6 +8,9 @@
 #include "MFCProjectDlg.h"
 #include "afxdialogex.h"
 
+
+#include "CCSVFile.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -54,6 +57,31 @@ CMFCProjectDlg::CMFCProjectDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCPROJECT_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+
+
+	// -- 확인용 : data 내용 출력 -- //
+	CString outputStr;
+	CCSVFile::GetCSVFileInterface();
+	CCSVFile::GetCSVFileInterface()->BringInData();
+	int count = CCSVFile::GetCSVFileInterface()->GetDataCount();
+	FILEDATA data;
+	for (int i = 0; i < count; i++)
+	{
+		CCSVFile::GetCSVFileInterface()->GetData(i, data);
+		outputStr = _T("");
+
+		outputStr += _T(data.m_strDate + ',');
+		outputStr += _T(data.m_strYoil + ',');
+		outputStr += _T(data.m_strData + ',');
+		outputStr += _T(data.m_strCategory + ',');
+		outputStr += _T(data.m_strStartTime + ',');
+		outputStr += _T(data.m_strEndTime + ',');
+
+		AfxMessageBox(outputStr);
+	}
+	// -- -- //
+
+	CCSVFile::GetCSVFileInterface()->StoreData();
 }
 
 void CMFCProjectDlg::DoDataExchange(CDataExchange* pDX)

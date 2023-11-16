@@ -44,8 +44,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -183,6 +183,9 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CCSVFile.h" />
+    <ClInclude Include="CDialogMain.h" />
+    <ClInclude Include="CDialogModify.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFCProject.h" />
     <ClInclude Include="MFCProjectDlg.h" />
@@ -191,6 +194,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CCSVFile.cpp" />
+    <ClCompile Include="CDialogMain.cpp" />
+    <ClCompile Include="CDialogModify.cpp" />
     <ClCompile Include="MFCProject.cpp" />
     <ClCompile Include="MFCProjectDlg.cpp" />
     <ClCompile Include="pch.cpp">
