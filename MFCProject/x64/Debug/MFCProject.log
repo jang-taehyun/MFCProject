@@ -1,11 +1,13 @@
 ﻿  CCSVFile.cpp
-D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(37,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'CString'
-D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(37,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'CString'
-D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(37,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'CString'
-D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(37,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 4 has type 'CString'
-D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(37,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 5 has type 'CString'
-D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(37,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 6 has type 'CString'
+D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(24,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'CString'
+D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(24,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'CString'
+D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(24,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'CString'
+D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(24,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 4 has type 'CString'
+D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(24,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 5 has type 'CString'
+D:\MFC\MFCProject\MFCProject\CCSVFile.cpp(24,15): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 6 has type 'CString'
+  CChangeDataFormat.cpp
   CDialogMain.cpp
+  CDialogModify.cpp
   MFCProjectDlg.cpp
   Generating Code...
   MFCProject.vcxproj -> D:\MFC\MFCProject\x64\Debug\MFCProject.exe

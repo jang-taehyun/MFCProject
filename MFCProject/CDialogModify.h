@@ -20,4 +20,14 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnClickedButtonAdd();
+	afx_msg void OnClickedButtonDelete();
+	afx_msg void OnClickedButtonModify();
+	CDateTimeCtrl m_dtpSelectDate;
+	CDateTimeCtrl m_dtpStartTime;
+	CDateTimeCtrl m_dtpEndTime;
+
+	COleDateTime GivenDate;
+	virtual BOOL OnInitDialog();
 };

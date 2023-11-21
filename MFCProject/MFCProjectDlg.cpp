@@ -10,6 +10,7 @@
 
 
 #include "CCSVFile.h"
+#include "CDialogModify.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -54,7 +55,8 @@ END_MESSAGE_MAP()
 
 
 CMFCProjectDlg::CMFCProjectDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_MFCPROJECT_DIALOG, pParent)
+	//: CDialogEx(IDD_MFCPROJECT_DIALOG, pParent)
+	:CDialogEx(IDD_DIALOG_MAIN, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -68,6 +70,7 @@ BEGIN_MESSAGE_MAP(CMFCProjectDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON_ENTER_MOD_DIALOG, &CMFCProjectDlg::OnClickedButtonEnterModDialog)
 END_MESSAGE_MAP()
 
 
@@ -156,3 +159,18 @@ HCURSOR CMFCProjectDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCProjectDlg::OnClickedButtonEnterModDialog()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CDialogModify NewDlg;
+	COleDateTime currentTime;
+	CString strMsg;
+	CMonthCalCtrl* pCalendar = (CMonthCalCtrl*)GetDlgItem(IDC_MONTHCALENDAR_MONTH);
+	pCalendar->GetCurSel(currentTime);
+	strMsg.Format("%d년 %d월 %d일", currentTime.GetYear(), currentTime.GetMonth(), currentTime.GetDay());
+	MessageBox(strMsg);
+	NewDlg.GivenDate = currentTime;
+	NewDlg.DoModal();
+}

@@ -14,7 +14,7 @@ public:
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_MFCPROJECT_DIALOG };
+	enum { IDD = IDD_DIALOG_MAIN };
 #endif
 
 	protected:
@@ -32,4 +32,6 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnClickedButtonEnterModDialog();
 };
