@@ -211,7 +211,7 @@ void CMFCProjectDlg::OnSelchangeTabWeek(NMHDR* pNMHDR, LRESULT* pResult)
 	NewDlg.m_SunToSat = nSelection;
 	//NewDlg.DoModal(); // create
 
-	// ------------- 태현 추가 ------------- //
+	// ------------- 태현 추가 ------------- //	// ---------- 13주차 추가 코드 ---------- //
 	COleDateTime selectedDate;
 	CMonthCalCtrl* pCalendar = (CMonthCalCtrl*)GetDlgItem(IDC_MONTHCALENDAR_MONTH);
 	pCalendar->GetCurSel(selectedDate);
@@ -238,7 +238,7 @@ void CMFCProjectDlg::OnSelchangeTabWeek(NMHDR* pNMHDR, LRESULT* pResult)
 	m_dlgObject.m_strSchedule = PrintData;
 	m_dlgObject.OnChangeEditSchedule();
 
-	// ------------- 태현 추가 ------------- //
+	// ------------- 태현 추가 ------------- //	// ---------- 13주차 추가 코드 ---------- //
 
 	*pResult = 0;
 }
@@ -255,12 +255,12 @@ void CMFCProjectDlg::OnSelectMonthcalendarMonth(NMHDR* pNMHDR, LRESULT* pResult)
 	int dayOfWeek = selectedDate.GetDayOfWeek();
 	m_tabSelection.SetCurSel(dayOfWeek - 1);
 
-	// ------------- 태현 추가 ------------- //
+	// ------------- 태현 추가 ------------- //	// ---------- 13주차 추가 코드 ---------- //
 	CString curDate;
 	std::queue<int> storage;
 
 	// 받아온 날짜를 CString 타입으로 변환
-	CChangeDataFormat::GetInst()->ChangeDateToCString(curDate, selectedDate);
+	CChangeDataFormat::ChangeDateToCString(curDate, selectedDate);
 
 	// 선택된 날짜에 관련된 CSV data들을 받아온다.
 	FILEDATA data;
@@ -287,7 +287,7 @@ void CMFCProjectDlg::OnSelectMonthcalendarMonth(NMHDR* pNMHDR, LRESULT* pResult)
 	// tab control에서 하나로 합친 data들을 출력하게 한다.
 	m_dlgObject.m_strSchedule = PrintData;
 	m_dlgObject.OnChangeEditSchedule();
-	// ------------- 태현 추가 ------------- //
+	// ------------- 태현 추가 ------------- //	// ---------- 13주차 추가 코드 ---------- //
 
 	*pResult = 0;
 }

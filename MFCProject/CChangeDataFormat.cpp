@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "CChangeDataFormat.h"
 
-CChangeDataFormat::CChangeDataFormat()
-{
-}
-
-CChangeDataFormat::~CChangeDataFormat()
-{
-}
+//CChangeDataFormat::CChangeDataFormat()
+//{
+//}
+//
+//CChangeDataFormat::~CChangeDataFormat()
+//{
+//}
 
 bool CChangeDataFormat::GetYoilToCString(CString& _output, const CDateTimeCtrl& _input)
 {
@@ -87,6 +87,25 @@ bool CChangeDataFormat::GetTimeToInt(int& _output, const CString& _input, int _f
 	}
 
 	_output = _ttoi(strtmp);
+
+	return true;
+}
+
+bool CChangeDataFormat::ChangeDateToCOleDateTime(COleDateTime& _output, const CDateTimeCtrl& _input)
+{
+	CTime sel_date;
+
+	// input에 저장된 값을 CTime 타입으로 저장
+	_input.GetTime(sel_date);
+
+	int year, month, day;
+
+	// 연, 월, 일 순서대로 CTime 타입으로 저장된 값을 불러와서,
+	// CString 타입으로 변환한 후에 계속 이어 붙이기
+	year = sel_date.GetYear();
+	month = sel_date.GetMonth();
+	day = sel_date.GetDay();
+	_output.SetDate(year, month, day);
 
 	return true;
 }

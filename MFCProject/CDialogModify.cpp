@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(CDialogModify, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_DELETE, &CDialogModify::OnClickedButtonDelete)
 	ON_BN_CLICKED(IDC_BUTTON_MODIFY, &CDialogModify::OnClickedButtonModify)
 	ON_LBN_SELCHANGE(IDC_LIST_CATEGORY, &CDialogModify::OnSelchangeListCategory)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATETIMEPICKER_SELECT_DATE, &CDialogModify::OnDatetimechangeDatetimepickerSelectDate)
 END_MESSAGE_MAP()
 
 
@@ -74,16 +75,23 @@ void CDialogModify::OnClickedButtonDelete()
 
 	FILEDATA data;
 	CString strCurrentDate = _T("");
+	CString strCurrentCategory = _T("");
+
+	// 현재 list box에서 선택된 data를 가져온다.
+	int index = m_listCategory.GetCurSel();
+	m_listCategory.GetText(index, strCurrentCategory);
 
 	// 현재 날짜를 CString 타입으로 변환
-	CChangeDataFormat::GetInst()->ChangeDateToCString(strCurrentDate, m_dtpSelectDate);
+	CChangeDataFormat::ChangeDateToCString(strCurrentDate, m_dtpSelectDate);
 
-	// CSV 파일 안에 저장된 데이터 중, 현재 날짜로 저장된 데이터를 찾아 삭제
+	// CSV 파일 안에 저장된 데이터 중, 현재 날짜와 선택된 category로 저장된 데이터를 찾아 삭제
 	int count = CCSVFile::GetCSVFileInterface()->GetDataCount();
 	for (int i = 0; i < count; i++)
 	{
 		CCSVFile::GetCSVFileInterface()->GetData(i, data);
-		if (data.m_strDate == strCurrentDate)
+		// ---------- 13주차 추가 코드 ---------- //
+		if (data.m_strDate == strCurrentDate && data.m_strCategory == strCurrentCategory)
+			// ---------- 13주차 추가 코드 ---------- //
 		{
 			CCSVFile::GetCSVFileInterface()->DeleteData(i);
 
@@ -103,20 +111,28 @@ void CDialogModify::OnClickedButtonModify()
 
 	FILEDATA data;
 	CString strCurrentDate = _T("");
+	// ---------- 13주차 추가 코드 ---------- //
+	CString strCurrentCategory = _T("");
 
-	// dialog에 설정되어 있는 값들을 CSV 형식으로 만들기
-	CCSVFile::GetCSVFileInterface()->MakeDataFormat(data, m_dtpSelectDate, m_dtpStartTime, m_dtpEndTime);
+	// 현재 list box에서 선택된 data를 가져온다.
+	int index = m_listCategory.GetCurSel();
+	m_listCategory.GetText(index, strCurrentCategory);
+	// ---------- 13주차 추가 코드 ---------- //
 
 	// 현재 날짜를 CString 타입으로 변환
-	CChangeDataFormat::GetInst()->ChangeDateToCString(strCurrentDate, m_dtpSelectDate);
+	CChangeDataFormat::ChangeDateToCString(strCurrentDate, m_dtpSelectDate);
 
 	// CSV 파일 안에 저장된 데이터 중, 현재 날짜로 저장된 데이터와 category를 찾아 수정
 	int count = CCSVFile::GetCSVFileInterface()->GetDataCount();
 	for (int i = 0; i < count; i++)
 	{
 		CCSVFile::GetCSVFileInterface()->GetData(i, data);
-		if (data.m_strDate == strCurrentDate)
+		// ---------- 13주차 추가 코드 ---------- //
+		if (data.m_strDate == strCurrentDate && data.m_strCategory == strCurrentCategory)
 		{
+			// dialog에 설정되어 있는 값들을 CSV 형식으로 만들기
+			CCSVFile::GetCSVFileInterface()->MakeDataFormat(data, m_dtpSelectDate, m_dtpStartTime, m_dtpEndTime);
+
 			// listbox에 저장된 문자열을 지우고
 			int index = m_listCategory.GetCurSel();
 			if (index == LB_ERR)
@@ -132,7 +148,9 @@ void CDialogModify::OnClickedButtonModify()
 			CCSVFile::GetCSVFileInterface()->ModifyData(i, data);
 
 			// listbox에 저장된 데이터 수정
-			m_listCategory.AddString(strtmp);
+			m_listCategory.InsertString(index, strtmp);
+
+			// ---------- 13주차 추가 코드 ---------- //
 
 			break;
 		}
@@ -144,12 +162,18 @@ BOOL CDialogModify::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	// ---------- 13주차 추가 코드 ---------- //
+	// list box와 edit control 초기화
+	m_listCategory.ResetContent();
+	SetDlgItemText(IDC_EDIT_TEXT_INPUT, NULL);
+	// ---------- 13주차 추가 코드 ---------- //
+
 	// TODO:  Add extra initialization here
 	VERIFY(m_dtpSelectDate.SetTime(GivenDate));
 	
 	// 현재 날짜를 CString 타입으로 변환
 	CString strCurrentDate;
-	CChangeDataFormat::GetInst()->ChangeDateToCString(strCurrentDate, m_dtpSelectDate);
+	CChangeDataFormat::ChangeDateToCString(strCurrentDate, m_dtpSelectDate);
 
 	// 데이터 찾기
 	FILEDATA _data;
@@ -183,16 +207,16 @@ BOOL CDialogModify::OnInitDialog()
 		// 시작 시간 설정
 		COleDateTime tmp;
 		int hour, min, sec;
-		CChangeDataFormat::GetInst()->GetTimeToInt(hour, _data.m_strStartTime, 0);
-		CChangeDataFormat::GetInst()->GetTimeToInt(min, _data.m_strStartTime, 1);
-		CChangeDataFormat::GetInst()->GetTimeToInt(sec, _data.m_strStartTime, 2);
+		CChangeDataFormat::GetTimeToInt(hour, _data.m_strStartTime, 0);
+		CChangeDataFormat::GetTimeToInt(min, _data.m_strStartTime, 1);
+		CChangeDataFormat::GetTimeToInt(sec, _data.m_strStartTime, 2);
 		tmp.SetTime(hour, min, sec);
 		m_dtpStartTime.SetTime(tmp);
 
 		// 끝나는 시간 설정
-		CChangeDataFormat::GetInst()->GetTimeToInt(hour, _data.m_strEndTime, 0);
-		CChangeDataFormat::GetInst()->GetTimeToInt(min, _data.m_strEndTime, 1);
-		CChangeDataFormat::GetInst()->GetTimeToInt(sec, _data.m_strEndTime, 2);
+		CChangeDataFormat::GetTimeToInt(hour, _data.m_strEndTime, 0);
+		CChangeDataFormat::GetTimeToInt(min, _data.m_strEndTime, 1);
+		CChangeDataFormat::GetTimeToInt(sec, _data.m_strEndTime, 2);
 		tmp.SetTime(hour, min, sec);
 		m_dtpEndTime.SetTime(tmp);
 
@@ -223,7 +247,7 @@ void CDialogModify::OnSelchangeListCategory()
 	int index = 0;
 
 	// 현재 선택된 날짜를 CString 타입으로 변환해서 가져오기
-	CChangeDataFormat::GetInst()->ChangeDateToCString(strCurrentDate, m_dtpSelectDate);
+	CChangeDataFormat::ChangeDateToCString(strCurrentDate, m_dtpSelectDate);
 
 	// list box에 선택된 data 가져오기
 	int SelectIndex = m_listCategory.GetCurSel();
@@ -249,19 +273,32 @@ void CDialogModify::OnSelchangeListCategory()
 	// 시작 시간 설정
 	COleDateTime tmp;
 	int hour, min, sec;
-	CChangeDataFormat::GetInst()->GetTimeToInt(hour, _data.m_strStartTime, 0);
-	CChangeDataFormat::GetInst()->GetTimeToInt(min, _data.m_strStartTime, 1);
-	CChangeDataFormat::GetInst()->GetTimeToInt(sec, _data.m_strStartTime, 2);
+	CChangeDataFormat::GetTimeToInt(hour, _data.m_strStartTime, 0);
+	CChangeDataFormat::GetTimeToInt(min, _data.m_strStartTime, 1);
+	CChangeDataFormat::GetTimeToInt(sec, _data.m_strStartTime, 2);
 	tmp.SetTime(hour, min, sec);
 	m_dtpStartTime.SetTime(tmp);
 
 	// 끝나는 시간 설정
-	CChangeDataFormat::GetInst()->GetTimeToInt(hour, _data.m_strEndTime, 0);
-	CChangeDataFormat::GetInst()->GetTimeToInt(min, _data.m_strEndTime, 1);
-	CChangeDataFormat::GetInst()->GetTimeToInt(sec, _data.m_strEndTime, 2);
+	CChangeDataFormat::GetTimeToInt(hour, _data.m_strEndTime, 0);
+	CChangeDataFormat::GetTimeToInt(min, _data.m_strEndTime, 1);
+	CChangeDataFormat::GetTimeToInt(sec, _data.m_strEndTime, 2);
 	tmp.SetTime(hour, min, sec);
 	m_dtpEndTime.SetTime(tmp);
 
 	// edit control에 category 데이터 전송
 	SetDlgItemText(IDC_EDIT_TEXT_INPUT, _data.m_strCategory);
 }
+
+// ---------- 13주차 추가 코드 ---------- //
+void CDialogModify::OnDatetimechangeDatetimepickerSelectDate(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	COleDateTime ChangeDate;
+	CChangeDataFormat::ChangeDateToCOleDateTime(ChangeDate, m_dtpSelectDate);
+	GivenDate = ChangeDate;
+	OnInitDialog();
+	*pResult = 0;
+}
+// ---------- 13주차 추가 코드 ---------- //

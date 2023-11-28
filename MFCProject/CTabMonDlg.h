@@ -25,6 +25,7 @@ public:
 	CString m_strSchedule;
 	virtual BOOL OnInitDialog();
 	int m_SunToSat;
-//	afx_msg void OnChangeEditSchedule();
+	// ---------- 13주차 추가 코드 ---------- //
 	afx_msg void OnChangeEditSchedule();
+	// ---------- 13주차 추가 코드 ---------- //
 };

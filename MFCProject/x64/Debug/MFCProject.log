@@ -1,2 +1,5 @@
-﻿  MFCProjectDlg.cpp
+﻿  CTabMonDlg.cpp
+  MFCProject.cpp
+  MFCProjectDlg.cpp
+  Generating Code...
   MFCProject.vcxproj -> D:\MFC\MFCProject\x64\Debug\MFCProject.exe

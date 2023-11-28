@@ -21,7 +21,9 @@ bool CCSVFile::StoreData()
 	// 배열에 저장된 값을 파일에 write
 	for (int i = 0; i < DataCount; i++)
 	{
+		// ---------- 13주차 추가 코드 ---------- //
 		fprintf(fp, "%s,%s,%s,%s,%s,%s\n", data[i].m_strDate, data[i].m_strYoil, data[i].m_strData, data[i].m_strCategory, data[i].m_strStartTime, data[i].m_strEndTime);
+		// ---------- 13주차 추가 코드 ---------- //
 	}
 
 	// CSV 파일 닫기
@@ -200,10 +202,10 @@ bool CCSVFile::MakeDataFormat(FILEDATA& _output, const CDateTimeCtrl& _SelDate, 
 	CString strInputData = _T("");
 
 	// 각 control들에 저장된 값들을 CString 타입으로 변환
-	CChangeDataFormat::GetInst()->ChangeDateToCString(strSelectDate, _SelDate);
-	CChangeDataFormat::GetInst()->ChangeTimeToCString(strSelectStartTime, _StartTime);
-	CChangeDataFormat::GetInst()->ChangeTimeToCString(strSelectEndTime, _EndTime);
-	CChangeDataFormat::GetInst()->GetYoilToCString(strSelectYoil, _SelDate);
+	CChangeDataFormat::ChangeDateToCString(strSelectDate, _SelDate);
+	CChangeDataFormat::ChangeTimeToCString(strSelectStartTime, _StartTime);
+	CChangeDataFormat::ChangeTimeToCString(strSelectEndTime, _EndTime);
+	CChangeDataFormat::GetYoilToCString(strSelectYoil, _SelDate);
 
 	// CString 타입에 변환된 값들을, CSV 파일 양식에 맞춰 output 버퍼에 저장
 	_output.m_strDate = strSelectDate;
@@ -216,6 +218,7 @@ bool CCSVFile::MakeDataFormat(FILEDATA& _output, const CDateTimeCtrl& _SelDate, 
 	return true;
 }
 
+// ---------- 13주차 추가 코드 ---------- //
 bool CCSVFile::GetCategoryInWeek(CString& _output, const COleDateTime& _standard, int flag)
 {
 	// flag가 유효하지 않다면 함수 종료
@@ -236,7 +239,7 @@ bool CCSVFile::GetCategoryInWeek(CString& _output, const COleDateTime& _standard
 
 	// 연산 결과로 나온 날짜 data를 CString 형식으로 변환한다.
 	CString strtmp = _T("");
-	CChangeDataFormat::GetInst()->ChangeDateToCString(strtmp, tmp);
+	CChangeDataFormat::ChangeDateToCString(strtmp, tmp);
 
 	// 저장된 data중 설정된 날짜에 관련된 CSV data 중 category 데이터를 이어 붙인다.
 	FILEDATA data;
@@ -249,3 +252,4 @@ bool CCSVFile::GetCategoryInWeek(CString& _output, const COleDateTime& _standard
 
 	return true;
 }
+// ---------- 13주차 추가 코드 ---------- //

@@ -32,4 +32,5 @@ public:
 	virtual BOOL OnInitDialog();
 	CListBox m_listCategory;
 	afx_msg void OnSelchangeListCategory();
+	afx_msg void OnDatetimechangeDatetimepickerSelectDate(NMHDR* pNMHDR, LRESULT* pResult);
 };

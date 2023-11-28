@@ -34,7 +34,6 @@ public:
 	int GetDataCount() { return DataCount; }								// 전체 data의 개수 반환
 	bool GetData(int _index, FILEDATA& _buffer)								// 특정 data를 output buffer에 저장하는 방식으로 data를 가져오는 함수
 	{
-		// 23.11.19. 추가된 코드 //
 		// 범위에 벗어나면 데이터 가져오기 연산을 수행하지 않음
 		if (_index < 0 || _index >= DataCount)
 			return false;
@@ -61,7 +60,9 @@ public:
 	// CSV 파일 양식으로 만들어주는 함수
 	bool MakeDataFormat(FILEDATA& _output, const CDateTimeCtrl& _SelDate, const CDateTimeCtrl& _StartTime, const CDateTimeCtrl& _EndTime);
 
+	// ---------- 13주차 추가 코드 ---------- //
 	// week에서 1개 day의 Category data를 얻오는 함수
 	bool GetCategoryInWeek(CString& _output, const COleDateTime& _standard, int flag);
+	// ---------- 13주차 추가 코드 ---------- //
 };
 
