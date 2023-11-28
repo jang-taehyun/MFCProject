@@ -60,5 +60,8 @@ public:
 
 	// CSV 파일 양식으로 만들어주는 함수
 	bool MakeDataFormat(FILEDATA& _output, const CDateTimeCtrl& _SelDate, const CDateTimeCtrl& _StartTime, const CDateTimeCtrl& _EndTime);
+
+	// week에서 1개 day의 Category data를 얻오는 함수
+	bool GetCategoryInWeek(CString& _output, const COleDateTime& _standard, int flag);
 };
 

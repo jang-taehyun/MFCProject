@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "CTabMonDlg.h"
 
 
 // CMFCProjectDlg 대화 상자
@@ -34,4 +35,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnClickedButtonEnterModDialog();
+	CTabCtrl m_tabSelection;
+	CTabMonDlg m_dlgObject;
+	afx_msg void OnSelchangeTabWeek(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSelectMonthcalendarMonth(NMHDR* pNMHDR, LRESULT* pResult);
+	CEdit m_ctrlCurTime;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	CFont font;
 };

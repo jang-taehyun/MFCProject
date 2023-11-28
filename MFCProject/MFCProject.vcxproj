@@ -185,8 +185,8 @@
   <ItemGroup>
     <ClInclude Include="CChangeDataFormat.h" />
     <ClInclude Include="CCSVFile.h" />
-    <ClInclude Include="CDialogMain.h" />
     <ClInclude Include="CDialogModify.h" />
+    <ClInclude Include="CTabMonDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFCProject.h" />
     <ClInclude Include="MFCProjectDlg.h" />
@@ -197,8 +197,8 @@
   <ItemGroup>
     <ClCompile Include="CChangeDataFormat.cpp" />
     <ClCompile Include="CCSVFile.cpp" />
-    <ClCompile Include="CDialogMain.cpp" />
     <ClCompile Include="CDialogModify.cpp" />
+    <ClCompile Include="CTabMonDlg.cpp" />
     <ClCompile Include="MFCProject.cpp" />
     <ClCompile Include="MFCProjectDlg.cpp" />
     <ClCompile Include="pch.cpp">

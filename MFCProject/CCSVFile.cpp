@@ -5,7 +5,7 @@
 
 CCSVFile::CCSVFile() : DataCount(0)
 {
-	
+	BringInData();
 }
 
 CCSVFile::~CCSVFile()
@@ -21,7 +21,7 @@ bool CCSVFile::StoreData()
 	// 배열에 저장된 값을 파일에 write
 	for (int i = 0; i < DataCount; i++)
 	{
-		fprintf(fp, "%s, %s, %s, %s, %s, %s\n", data[i].m_strDate, data[i].m_strYoil, data[i].m_strData, data[i].m_strCategory, data[i].m_strStartTime, data[i].m_strEndTime);
+		fprintf(fp, "%s,%s,%s,%s,%s,%s\n", data[i].m_strDate, data[i].m_strYoil, data[i].m_strData, data[i].m_strCategory, data[i].m_strStartTime, data[i].m_strEndTime);
 	}
 
 	// CSV 파일 닫기
@@ -212,6 +212,40 @@ bool CCSVFile::MakeDataFormat(FILEDATA& _output, const CDateTimeCtrl& _SelDate, 
 	_output.m_strCategory = strInputCategory;
 	_output.m_strStartTime = strSelectStartTime;
 	_output.m_strEndTime = strSelectEndTime;
+
+	return true;
+}
+
+bool CCSVFile::GetCategoryInWeek(CString& _output, const COleDateTime& _standard, int flag)
+{
+	// flag가 유효하지 않다면 함수 종료
+	if (flag > 6 || flag < 0)
+		return false;
+
+	COleDateTime tmp = _standard;
+
+	// 기준점이 되는 요일과 시작 요일(일요일)의 차이를 구하고 저장한다.
+	COleDateTimeSpan diff1(tmp.GetDayOfWeek() - 1, 0, 0, 0);
+
+	// 기준점이 되는 날짜와 '기준점이 되는 요일과 시작 요일(일요일)의 차이'를 뺀다.
+	tmp -= diff1;
+
+	// 연산 결과에서 flag 값을 더한다.
+	COleDateTimeSpan diff2(flag, 0, 0, 0);
+	tmp += diff2;
+
+	// 연산 결과로 나온 날짜 data를 CString 형식으로 변환한다.
+	CString strtmp = _T("");
+	CChangeDataFormat::GetInst()->ChangeDateToCString(strtmp, tmp);
+
+	// 저장된 data중 설정된 날짜에 관련된 CSV data 중 category 데이터를 이어 붙인다.
+	FILEDATA data;
+	for (int i = 0; i < DataCount; i++)
+	{
+		GetData(i, data);
+		if (data.m_strDate == strtmp)
+			_output += (data.m_strCategory + "\r\n");
+	}
 
 	return true;
 }

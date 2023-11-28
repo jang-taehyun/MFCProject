@@ -52,6 +52,47 @@ bool CChangeDataFormat::GetYoilToCString(CString& _output, const CDateTimeCtrl& 
 	return true;
 }
 
+bool CChangeDataFormat::GetTimeToInt(int& _output, const CString& _input, int _flag)
+{
+	// 0 : hour, year
+	// 1 : minute, month
+	// 2 : second, day
+	if (0 > _flag || _flag > 2)
+		return false;
+
+	CString strtmp = _T("");
+	int index = 0;
+	int flag = 0;
+
+	while (true)
+	{
+		if (flag != _flag)
+		{
+			if (_input[index] == _T('-') || _input[index] == _T(':'))
+				flag++;
+		}
+		else
+			break;
+
+		index++;
+	}
+
+	while (true)
+	{
+		if (_input[index] == NULL || _input[index] == _T('-') || _input[index] == _T(':'))
+			break;
+
+		strtmp += _input[index];
+		index++;
+	}
+
+	_output = _ttoi(strtmp);
+
+	return true;
+}
+
+
+
 bool CChangeDataFormat::ChangeDateToCString(CString& _output, const CDateTimeCtrl& _input)
 {
 	CTime sel_date;
@@ -67,13 +108,40 @@ bool CChangeDataFormat::ChangeDateToCString(CString& _output, const CDateTimeCtr
 	// CString 타입으로 변환한 후에 계속 이어 붙이기
 	ntmp = sel_date.GetYear();
 	strtmp.Format(_T("%d"), ntmp);
-	_date += (strtmp + '-');
+	_date += (strtmp + _T('-'));
 
 	ntmp = sel_date.GetMonth();
 	strtmp.Format(_T("%d"), ntmp);
-	_date += (strtmp + '-');
+	_date += (strtmp + _T('-'));
 
 	ntmp = sel_date.GetDay();
+	strtmp.Format(_T("%d"), ntmp);
+	_date += strtmp;
+
+	// 만들어진 CString 데이터를 output 버퍼에 저장
+	_output = _date;
+
+	return true;
+}
+
+bool CChangeDataFormat::ChangeDateToCString(CString& _output, const COleDateTime& _input)
+{
+	CString _date = _T("");
+
+	CString strtmp;
+	int ntmp;
+
+	// 연, 월, 일 순서대로 CTime 타입으로 저장된 값을 불러와서,
+	// CString 타입으로 변환한 후에 계속 이어 붙이기
+	ntmp = _input.GetYear();
+	strtmp.Format(_T("%d"), ntmp);
+	_date += (strtmp + _T('-'));
+
+	ntmp = _input.GetMonth();
+	strtmp.Format(_T("%d"), ntmp);
+	_date += (strtmp + _T('-'));
+
+	ntmp = _input.GetDay();
 	strtmp.Format(_T("%d"), ntmp);
 	_date += strtmp;
 
@@ -98,11 +166,11 @@ bool CChangeDataFormat::ChangeTimeToCString(CString& _output, const CDateTimeCtr
 	// CString 타입으로 변환한 후에 계속 이어 붙이기
 	ntmp = sel_time.GetHour();
 	strtmp.Format(_T("%d"), ntmp);
-	_time += (strtmp + ':');
+	_time += (strtmp + _T(':'));
 
 	ntmp = sel_time.GetMinute();
 	strtmp.Format(_T("%d"), ntmp);
-	_time += (strtmp + ':');
+	_time += (strtmp + _T(':'));
 
 	ntmp = sel_time.GetSecond();
 	strtmp.Format(_T("%d"), ntmp);
