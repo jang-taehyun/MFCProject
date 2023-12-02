@@ -37,7 +37,6 @@ public:
 		// 범위에 벗어나면 데이터 가져오기 연산을 수행하지 않음
 		if (_index < 0 || _index >= DataCount)
 			return false;
-		// ................... //
 
 		_buffer.m_strDate = data[_index].m_strDate;
 		_buffer.m_strYoil = data[_index].m_strYoil;

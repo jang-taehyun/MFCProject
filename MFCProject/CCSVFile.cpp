@@ -35,6 +35,8 @@ bool CCSVFile::StoreData()
 
 bool CCSVFile::BringInData()
 {
+	DataCount = 0;
+
 	// CSV 파일 열기
 	FILE* fp = nullptr;
 	fopen_s(&fp, "./DataFile.csv", "r");
@@ -125,6 +127,8 @@ bool CCSVFile::DeleteData(int _index)
 	if (_index < 0 || _index >= DataCount)
 		return false;
 
+	BringInData();
+
 	// 삭제할 데이터를 다음 데이터로 덮어씌우기
 	for (int i = _index; i < DataCount - 1; i++)
 	{
@@ -157,6 +161,8 @@ bool CCSVFile::AddData(const FILEDATA& _data)
 	if(DataCount >= MAX_DATA_NUM)
 		return false;
 
+	BringInData();
+
 	// 데이터 형식에 맞춰 값들을 저장
 	data[DataCount].m_strDate = _data.m_strDate;
 	data[DataCount].m_strYoil = _data.m_strYoil;
@@ -177,6 +183,8 @@ bool CCSVFile::ModifyData(int _index, const FILEDATA& _data)
 	// 범위에 벗어나면 데이터 수정 연산을 수행하지 않음
 	if (_index < 0 || _index >= DataCount)
 		return false;
+
+	BringInData();
 
 	// 데이터 형식에 맞춰 값들을 수정
 	data[_index].m_strDate = _data.m_strDate;
@@ -224,6 +232,8 @@ bool CCSVFile::GetCategoryInWeek(CString& _output, const COleDateTime& _standard
 	// flag가 유효하지 않다면 함수 종료
 	if (flag > 6 || flag < 0)
 		return false;
+
+	BringInData();
 
 	COleDateTime tmp = _standard;
 
